@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventsController;
-use App\Http\Controllers\Admin\PostController;
-use App\Models\Post;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +16,7 @@ use App\Models\Post;
 |
 */
 
-Route::get('/', function () {
-    $posts = Post::all();
-    return view('welcome', compact("posts"));
-});
+
 
 Route::middleware(['auth'])
     ->prefix('admin')
@@ -28,7 +24,6 @@ Route::middleware(['auth'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource("events", EventsController::class);
-        Route::resource("posts", PostController::class);
     });
 
 require __DIR__ . '/auth.php';
