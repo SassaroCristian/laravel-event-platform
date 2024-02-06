@@ -9,8 +9,10 @@ class Tag extends Model
 {
     use HasFactory;
 
-    public function posts()
+    // Definizione della relazione
+    // Un tag può essere associato a molti eventi
+    public function events()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Event::class);
     }
 }
