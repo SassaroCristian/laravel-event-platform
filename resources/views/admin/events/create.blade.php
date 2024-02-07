@@ -63,9 +63,6 @@
                     @endforeach
                 </div>
             </div>
-
-            {{-- Aggiungi i campi per le categorie e i tag se necessario --}}
-
             <button type="submit" class="btn btn-primary">Inserisci</button>
         </form>
     </div>
