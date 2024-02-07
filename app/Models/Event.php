@@ -18,12 +18,6 @@ class Event extends Model
 
     // Definizione delle relazioni
     // Un evento può appartenere a molte categorie
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
-    // Un evento può avere molti tag
     public function tags()
     {
         return $this->belongsToMany(Tag::class);

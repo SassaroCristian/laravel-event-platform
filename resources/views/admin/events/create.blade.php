@@ -17,7 +17,6 @@
     <div class="row">
         <form action="{{ route('admin.events.store') }}" method="POST">
             @csrf
-            {{-- name description --}}
             <div class="mb-3">
                 <label for="name" class="form-label">Nome</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
@@ -49,6 +48,20 @@
                 @error('description')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+            </div>
+            <div class="mb-3">
+                <label>Tags</label>
+                <div class="checkbox-groups">
+                    @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="tags[]" id="tag{{ $tag->id }}"
+                            value="{{ $tag->id }}">
+                        <label class="form-check-label" for="tag{{ $tag->id }}">
+                            {{ $tag->name }}
+                        </label>
+                    </div>
+                    @endforeach
+                </div>
             </div>
 
             {{-- Aggiungi i campi per le categorie e i tag se necessario --}}

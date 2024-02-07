@@ -16,6 +16,23 @@
                             {{ $event->date }}
                             <br>
                             {{ $event->location }}</b>
+                        <div class="mt-3">
+                            @if ($event->tags->count() > 0)
+                            <p>Tags:
+                                @foreach ($event->tags as $tag)
+                                <span class="badge bg-primary">{{ $tag->name }}</span>
+                                @endforeach
+                            </p>
+                            @endif
+
+                            <a href="{{ route('admin.events.edit', $event->id) }}" class="btn btn-primary">Modifica</a>
+                            <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST"
+                                style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Elimina</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
@@ -25,7 +26,8 @@ class EventsController extends Controller
      */
     public function create()
     {
-        return view("admin.events.create");
+        $tags = Tag::all();
+        return view("admin.events.create", compact('tags'));
     }
 
     /**
@@ -43,8 +45,13 @@ class EventsController extends Controller
         $event->description = $request->input('description');
         $event->save();
 
-        // Redirect alla pagina degli eventi
-        return redirect()->route("admin.events.index");
+        // Associali utilizzando il metodo attach()
+        $tag = Tag::find($request->input('tag_id')); // Correzione qui
+        $event->tags()->attach($tag);
+
+        // Altre operazioni o reindirizzamenti dopo l'associazione del tag all'evento
+
+        return redirect()->route('admin.events.index');
     }
 
     /**
@@ -60,22 +67,45 @@ class EventsController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $tags = Tag::all(); // Recupera tutte le tag disponibili
+        return view('admin.events.edit', compact('event', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EventRequest $request, Event $event)
+    public function update(Request $request, Event $event)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'date' => 'required|date',
+            'location' => 'required',
+            'description' => 'required',
+            'tags' => 'array',
+        ]);
+
+        // Aggiorna i campi dell'evento con i nuovi valori
+        $event->update([
+            'name' => $request->input('name'),
+            'date' => $request->input('date'),
+            'location' => $request->input('location'),
+            'description' => $request->input('description'),
+        ]);
+
+        // Sincronizza le tag dell'evento con quelle fornite dall'utente
+        $event->tags()->sync($request->input('tags'));
+
+        return redirect()->route('admin.events.index')->with('success', 'Evento modificato con successo.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return redirect()->route('admin.events.index')->with('success', 'Evento eliminato con successo.');
     }
 }
