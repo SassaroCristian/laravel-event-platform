@@ -8,5 +8,12 @@ use App\Models\Event;
 
 class EventApiController extends Controller
 {
+    public function jsonEvents()
+    {
+        // Ottieni tutti gli eventi dal database
+        $events = Event::all();
 
+        // Restituisci gli eventi in formato JSON
+        return response()->json($events);
+    }
 }
