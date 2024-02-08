@@ -20,7 +20,14 @@ class EventsController extends Controller
         // Passa i dati degli eventi alla vista 'events.index'
         return view('admin.events.index', compact('events'));
     }
+    public function jsonEvents()
+    {
+        // Ottieni tutti gli eventi dal database
+        $events = Event::all();
 
+        // Restituisci gli eventi in formato JSON
+        return response()->json($events);
+    }
     /**
      * Show the form for creating a new resource.
      */

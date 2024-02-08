@@ -1,12 +1,9 @@
 <?php
 
-use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventsController;
-use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
-use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +19,21 @@ use App\Models\Post;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// restituzione dati in forma di json
+Route::get('/json', function () {
+    return response()->json([
+        'message' => 'Hello, world!',
+        'data' => [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'age' => 30,
+        ]
+    ]);
+});
+
+
+
 
 Route::middleware(['auth'])
     ->prefix('admin')
