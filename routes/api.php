@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\EventsApiController;
+use App\Http\Controllers\Admin\EventApiController;
 
 
 /*
@@ -15,7 +15,7 @@ use App\Http\Controllers\Admin\EventsApiController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/json-events', [EventsApiController::class, 'jsonEvents']);
+Route::get('/json-e', [EventApiController::class, 'jsonEvents']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

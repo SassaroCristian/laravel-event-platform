@@ -10,10 +10,8 @@ class EventApiController extends Controller
 {
     public function jsonEvents()
     {
-        // Ottieni tutti gli eventi dal database
-        $events = Event::all();
+        $events = Event::with('tags')->get();
 
-        // Restituisci gli eventi in formato JSON
         return response()->json($events);
     }
 }

@@ -20,6 +20,6 @@ class Event extends Model
     // Un evento può appartenere a molte categorie
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'event_tag');
     }
 }
